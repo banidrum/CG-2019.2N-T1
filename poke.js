@@ -1,5 +1,5 @@
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.set( 1, 1, 20 );
 
 var renderer = new THREE.WebGLRenderer();
@@ -8,29 +8,35 @@ renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-var ambientLight = new THREE.AmbientLight( 0xcccccc );
-scene.add( ambientLight );
+var light = new THREE.AmbientLight( 0x404040 );
+scene.add( light );
 			
 var directionalLight = new THREE.DirectionalLight( 0xffffff );
 directionalLight.position.set( 0, 1, 1 ).normalize();
-scene.add( directionalLight );			
+scene.add( directionalLight );
 
 var loader = new THREE.GLTFLoader();
 
-loader.load('./assets/Squirtle/Squirtle.gltf', function(gltf) {
-    var object = gltf.scene;				
+loader.load('./assets/Squirtle.glb', function(gltf) {			
 	gltf.scene.scale.set( 2, 2, 2 );			   
-	gltf.scene.position.x = 0;				    //Position (x = right+ left-) 
-        gltf.scene.position.y = 0;				    //Position (y = up+, down-)
-	gltf.scene.position.z = 0;				    //Position (z = front +, back-)
+	gltf.scene.position.x = 0.5; // Esquerda, direita
+    gltf.scene.position.y = 0; // Cima, baixo				    
+	gltf.scene.position.z = 5;	// Frente, trás			     
 	
 	scene.add( gltf.scene );
 }, undefined, function(error) {
     console.error(error);
 });
 
+function animate() {
+	render();
+	requestAnimationFrame( animate );
+	}
+
 function render() {
     renderer.render(scene, camera);
 }
 
 render();
+
+animate();
