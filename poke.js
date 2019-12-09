@@ -15,6 +15,22 @@ var directionalLight = new THREE.DirectionalLight( 0xffffff );
 directionalLight.position.set( 0, 1, 1 ).normalize();
 scene.add( directionalLight );
 
+// var texture = THREE.TextureLoader('./assets/background.png');
+// var backgroundMesh = new THREE.Mesh(
+//     new THREE.PlaneGeometry(2, 2, 0),
+//     new THREE.MeshBasicMaterial({map: texture})
+// );
+
+// backgroundMesh.material.depthTest = false;
+// backgroundMesh.material.depthWrite = false;
+
+// var backgroundScene = new THREE.Scene();
+// var backgroundCamera = new THREE.Camera();
+// backgroundScene.add(backgroundCamera);
+// backgroundScene.add(backgroundMesh);
+
+var backgroundLoader = new THREE.TextureLoader();
+
 var loader = new THREE.GLTFLoader();
 
 loader.load('./assets/Squirtle.glb', function(gltf) {			
@@ -26,6 +42,10 @@ loader.load('./assets/Squirtle.glb', function(gltf) {
 	scene.add( gltf.scene );
 }, undefined, function(error) {
     console.error(error);
+});
+
+backgroundLoader.load('./assets/background1920.png', function(texture) { 
+    scene.background = texture;
 });
 
 function animate() {
