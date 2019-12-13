@@ -52,8 +52,8 @@ backgroundLoader.load('./assets/background1920.png', function(texture) {
     scene.background = texture;
 });
 
-const zSpeed = 0.5;
-const xSpeed = 0.05;
+const zSpeed = 0.25;
+const xSpeed = 0.25;
 
 document.addEventListener("keydown", keyPress, false);
 function keyPress(e) {	
