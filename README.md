@@ -6,4 +6,10 @@
 
 ## About
 
-Trabalho com o Pokémon se mexendo, restante da descrição TODO
+A ideia do trabalho é fazer o Pokémon Squirtle se movimentar para a frente, para trás e para os lados.
+
+O Squirtle irá se movimentar através do disparo das teclas W, S, A e D.
+
+## Link disponibilizado para a visualização do projeto:
+
+TODO
