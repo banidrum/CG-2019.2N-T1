@@ -1,17 +1,19 @@
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 0.1, 1000 );
 camera.position.set( 1, 1, 20 );
 
-var renderer = new THREE.WebGLRenderer();
+var model;
+
+const renderer = new THREE.WebGLRenderer();
 renderer.setClearColor( 0xC5C5C3 );
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-var light = new THREE.AmbientLight( 0x404040 );
+const light = new THREE.AmbientLight( 0x404040 );
 scene.add( light );
 			
-var directionalLight = new THREE.DirectionalLight( 0xffffff );
+const directionalLight = new THREE.DirectionalLight( 0xffffff );
 directionalLight.position.set( 0, 1, 1 ).normalize();
 scene.add( directionalLight );
 
@@ -29,9 +31,9 @@ scene.add( directionalLight );
 // backgroundScene.add(backgroundCamera);
 // backgroundScene.add(backgroundMesh);
 
-var backgroundLoader = new THREE.TextureLoader();
+const backgroundLoader = new THREE.TextureLoader();
 
-var loader = new THREE.GLTFLoader();
+const loader = new THREE.GLTFLoader();
 
 loader.load('./assets/Squirtle.glb', function(gltf) {			
 	gltf.scene.scale.set( 2, 2, 2 );			   
@@ -39,6 +41,8 @@ loader.load('./assets/Squirtle.glb', function(gltf) {
     gltf.scene.position.y = 0; // Cima, baixo				    
 	gltf.scene.position.z = 5;	// Frente, trás			     
 	
+	model = gltf.scene;
+
 	scene.add( gltf.scene );
 }, undefined, function(error) {
     console.error(error);
@@ -47,6 +51,23 @@ loader.load('./assets/Squirtle.glb', function(gltf) {
 backgroundLoader.load('./assets/background1920.png', function(texture) { 
     scene.background = texture;
 });
+
+const zSpeed = 0.5;
+const xSpeed = 0.05;
+
+document.addEventListener("keydown", keyPress, false);
+function keyPress(e) {	
+	let key = e.which;
+	if(key == 87) {
+		model.position.z += zSpeed;
+	} else if(key == 83) {
+		model.position.z -= zSpeed;
+	} else if(key == 65) {
+		model.position.x -= xSpeed;
+	} else if(key == 68) {
+		model.position.x += xSpeed;
+	}
+}
 
 function animate() {
 	render();
